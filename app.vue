@@ -10,24 +10,5 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useConfigStore } from '~/stores/config'
-import { useServicesStore } from '~/stores/services'
-import { useTeamStore } from '~/stores/team'
-import { useFaqStore } from '~/stores/faq'
-
-const configStore = useConfigStore()
-const servicesStore = useServicesStore()
-const teamStore = useTeamStore()
-const faqStore = useFaqStore()
-
-// Load all data on app mount
-onMounted(async () => {
-  await Promise.all([
-    configStore.fetchConfig(),
-    servicesStore.fetchServices(),
-    teamStore.fetchTeam(),
-    faqStore.fetchFaqs()
-  ])
-})
+// Data loading is handled by the 01.init-stores.ts plugin
 </script>
