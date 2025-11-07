@@ -24,7 +24,7 @@ services:
       - "traefik.http.middlewares.tagakam-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
 
       # Redirection apex -> www (UNIQUEMENT tagakam.de, pas les sous-domaines)
-      #- "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.regex=^https?://tagakam\\.de(/.*)?$"
+      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.regex=^https?://portal.c-simweb\\.de(/.*)?$"
       #- "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.replacement=https://www.tagakam.de$1"
       - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.permanent=true"
 
