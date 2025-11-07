@@ -31,7 +31,7 @@ services:
       # --- Routers ---
 
       # www -> sert le site
-      - "traefik.http.routers.tagakam-www.entrypoints=frontentagakamecure"
+      - "traefik.http.routers.tagakam-www.entrypoints=frontendsecure"
       - "traefik.http.routers.tagakam-www.rule=Host(`www.portal.c-simweb.de`)"
       - "traefik.http.routers.tagakam-www.tls=true"
       - "traefik.http.routers.tagakam-www.service=tagakam"
