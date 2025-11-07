@@ -1,51 +1,39 @@
-# Utilisation de l'image officielle Node.js LTS
-FROM node:20-alpine AS base
+# Multi-stage build für Production
+FROM node:20-alpine AS builder
 
-# Installer les dépendances uniquement quand nécessaire
-FROM base AS deps
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Copier les fichiers de dépendances
-COPY package.json package-lock.json* ./
-RUN npm ci
+# Package files kopieren und Dependencies installieren
+COPY package*.json ./
+RUN npm ci --only=production=false
 
-# Reconstruire le code source uniquement quand nécessaire
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+# Source code kopieren
 COPY . .
 
-# Variables d'environnement pour le build
-ENV NEXT_TELEMETRY_DISABLED=1
-
-# Build de l'application
+# Nuxt App für Production builden
 RUN npm run build
 
-# Image de production, copier uniquement les fichiers nécessaires
-FROM base AS runner
+# Production Stage
+FROM node:20-alpine
+
 WORKDIR /app
 
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+# Nur Production Dependencies installieren
+COPY package*.json ./
+RUN npm ci --only=production && npm cache clean --force
 
-# Créer un utilisateur non-root
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+# Built app vom Builder Stage kopieren
+COPY --from=builder /app/.output /app/.output
 
-# Copier les fichiers publics
-COPY --from=builder /app/public ./public
-
-# Copier les fichiers de build
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-USER nextjs
-
+# Port exponieren
 EXPOSE 3003
 
-ENV PORT=3003
-ENV HOSTNAME="0.0.0.0"
+# Environment Variable für Production
+ENV NODE_ENV=production
 
-# Démarrer l'application
-CMD ["node", "server.js"]
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s \
+  CMD node -e "require('http').get('http://localhost:3003/', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+
+# Start command
+CMD ["node", ".output/server/index.mjs"]
