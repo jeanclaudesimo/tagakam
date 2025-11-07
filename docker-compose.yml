@@ -23,23 +23,23 @@ services:
       # --- Middlewares ---
       - "traefik.http.middlewares.tagakam-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
 
-      # Redirection apex -> www (UNIQUEMENT star-gebaeudereinigung.de, pas les sous-domaines)
-      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.regex=^https?://star-gebaeudereinigung\\.de(/.*)?$"
-      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.replacement=https://www.star-gebaeudereinigung.de$1"
+      # Redirection apex -> www (UNIQUEMENT test-simweb.de, pas les sous-domaines)
+      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.regex=^https?://test-simweb\\.de(/.*)?$"
+      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.replacement=https://www.test-simweb.de$1"
       - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.permanent=true"
 
       # --- Routers ---
 
       # www -> sert le site
       - "traefik.http.routers.tagakam-www.entrypoints=frontentagakamecure"
-      - "traefik.http.routers.tagakam-www.rule=Host(`www.star-gebaeudereinigung.de`)"
+      - "traefik.http.routers.tagakam-www.rule=Host(`www.test-simweb.de`)"
       - "traefik.http.routers.tagakam-www.tls=true"
       - "traefik.http.routers.tagakam-www.service=tagakam"
       - "traefik.http.routers.tagakam-www.middlewares=tagakam-headers"
 
       # apex -> applique la redirection (vers www)
       - "traefik.http.routers.tagakam-root.entrypoints=frontentagakamecure"
-      - "traefik.http.routers.tagakam-root.rule=Host(`star-gebaeudereinigung.de`)"
+      - "traefik.http.routers.tagakam-root.rule=Host(`test-simweb.de`)"
       - "traefik.http.routers.tagakam-root.tls=true"
       - "traefik.http.routers.tagakam-root.middlewares=tagakam-redirect-to-www@docker"
       - "traefik.http.routers.tagakam-root.service=noop@internal"
