@@ -37,9 +37,9 @@ COPY --from=builder --chown=nuxtjs:nodejs /app/.output /app/.output
 
 USER nuxtjs
 
-EXPOSE 3000
+EXPOSE 3003
 
-ENV PORT=3000
+ENV PORT=3003
 ENV HOST=0.0.0.0
 
 # Démarrer l'application Nuxt
