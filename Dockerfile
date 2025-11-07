@@ -17,9 +17,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Variables d'environnement pour le build
-ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
-# Build de l'application Nuxt
+# Build de l'application
 RUN npm run build
 
 # Image de production, copier uniquement les fichiers nécessaires
@@ -27,20 +27,25 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Créer un utilisateur non-root
 RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nuxtjs
+RUN adduser --system --uid 1001 nextjs
 
-# Copier les fichiers de build Nuxt (.output)
-COPY --from=builder --chown=nuxtjs:nodejs /app/.output /app/.output
+# Copier les fichiers publics
+COPY --from=builder /app/public ./public
 
-USER nuxtjs
+# Copier les fichiers de build
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
 
 EXPOSE 3003
 
 ENV PORT=3003
-ENV HOST=0.0.0.0
+ENV HOSTNAME="0.0.0.0"
 
-# Démarrer l'application Nuxt
-CMD ["node", ".output/server/index.mjs"]
+# Démarrer l'application
+CMD ["node", "server.js"]
