@@ -1,0 +1,49 @@
+services:
+  tagakam:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tagakam
+    ports:
+      - "3003:3000"   # Host:Container (le conteneur écoute sur port 3000)
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=3000
+    restart: unless-stopped
+    networks:
+      - traefik-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-net"
+
+      # Service -> port INTERNE du conteneurs (3000)
+      - "traefik.http.services.tagakam.loadbalancer.server.port=3000"
+
+      # --- Middlewares ---
+      - "traefik.http.middlewares.tagakam-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
+
+      # Redirection apex -> www (UNIQUEMENT tagakam.de, pas les sous-domaines)
+      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.regex=^https?://tagakam\\.de(/.*)?$"
+      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.replacement=https://www.tagakam.de$1"
+      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.permanent=true"
+
+      # --- Routers ---
+
+      # www -> sert le site
+      - "traefik.http.routers.tagakam-www.entrypoints=frontentagakamecure"
+      - "traefik.http.routers.tagakam-www.rule=Host(`www.tagakam.de`)"
+      - "traefik.http.routers.tagakam-www.tls=true"
+      - "traefik.http.routers.tagakam-www.service=tagakam"
+      - "traefik.http.routers.tagakam-www.middlewares=tagakam-headers"
+
+      # apex -> applique la redirection (vers www)
+      - "traefik.http.routers.tagakam-root.entrypoints=frontentagakamecure"
+      - "traefik.http.routers.tagakam-root.rule=Host(`tagakam.de`)"
+      - "traefik.http.routers.tagakam-root.tls=true"
+      - "traefik.http.routers.tagakam-root.middlewares=tagakam-redirect-to-www@docker"
+      - "traefik.http.routers.tagakam-root.service=noop@internal"
+
+networks:
+  traefik-net:
+    external: true
