@@ -43,9 +43,8 @@
         <div>
           <h4 class="text-white font-semibold text-lg mb-4">Legal</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="#" class="hover:text-primary-400 transition-colors">Datenschutz</a></li>
-            <li><a href="#" class="hover:text-primary-400 transition-colors">Impressum</a></li>
-            <li><a href="#" class="hover:text-primary-400 transition-colors">AGB</a></li>
+            <li><NuxtLink to="/datenschutz" class="hover:text-primary-400 transition-colors">Datenschutz</NuxtLink></li>
+            <li><NuxtLink to="/impressum" class="hover:text-primary-400 transition-colors">Impressum</NuxtLink></li>
           </ul>
         </div>
 

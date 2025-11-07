@@ -3,13 +3,7 @@
     <NuxtRouteAnnouncer />
     <TheHeader />
     <main>
-      <SectionsHeroSection />
-      <SectionsAboutSection />
-      <SectionsServicesSection />
-      <SectionsTeamSection />
-      <SectionsPartnersSection />
-      <SectionsFaqSection />
-      <SectionsContactSection />
+      <NuxtPage />
     </main>
     <TheFooter />
   </div>
