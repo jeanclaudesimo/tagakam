@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: tagakam
     ports:
-      - "3003:3000"   # le conteneur écoute 3000
+      - "3004:3000"   # le conteneur écoute 3000
     environment:
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1
@@ -18,7 +18,7 @@ services:
       - "traefik.docker.network=traefik-net"
 
       # Service -> port INTERNE (3000)
-      - "traefik.http.services.tagakam-xix29f-54.loadbalancer.server.port=3000"
+      - "traefik.http.services.tagakam-xix29f-54.loadbalancer.server.port=3004"
 
       # --- Middlewares ---
       - "traefik.http.middlewares.tagakam-xix29f-54-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
