@@ -26,6 +26,12 @@ ls -la .output/server/chunks/ 2>/dev/null || echo "chunks directory not found or
 echo "Checking node_modules..."
 ls -la node_modules/ 2>/dev/null | head -10 || echo "node_modules not found"
 
+echo "Checking .output/public directory (static files)..."
+ls -la .output/public/ 2>/dev/null | head -20 || echo ".output/public directory not found or empty"
+
+echo "Checking .output/public/_nuxt directory..."
+ls -la .output/public/_nuxt/ 2>/dev/null | head -10 || echo ".output/public/_nuxt directory not found or empty"
+
 echo "Starting Node.js server with NODE_OPTIONS for better error reporting..."
 export NODE_OPTIONS="--trace-warnings --unhandled-rejections=strict"
 
