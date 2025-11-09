@@ -29,10 +29,10 @@ RUN npm ci --only=production && npm cache clean --force
 # Copier le build depuis le builder
 COPY --from=builder /app/.output /app/.output
 
-# Set NODE_ENV, PORT and HOSTNAME
+# Set NODE_ENV, PORT and HOST
 ENV NODE_ENV=production
 ENV PORT=3004
-ENV HOSTNAME=0.0.0.0
+ENV HOST=0.0.0.0
 
 # Expose le port interne du conteneur
 EXPOSE 3004
