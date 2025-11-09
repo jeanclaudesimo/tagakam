@@ -5,7 +5,8 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'node',
-    port: 3004
+    port: 3004,
+    host: '0.0.0.0'
   },
 
   modules: [
