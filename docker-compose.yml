@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: tagakam
     ports:
-      - "3004:3000"   # le conteneur écoute 3000
+      - "3004:3004"   # le conteneur écoute maintenant sur 3004
     environment:
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1
@@ -17,19 +17,18 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-net"
 
-      # Service -> port INTERNE (3000)
+      # Service -> port INTERNE (3004)
       - "traefik.http.services.tagakam-xix29f-54.loadbalancer.server.port=3004"
 
       # --- Middlewares ---
       - "traefik.http.middlewares.tagakam-xix29f-54-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
 
-      # Redirection apex -> www (UNIQUEMENT digitalssolutions.de, pas les sous-domaines)
+      # Redirection apex -> www
       - "traefik.http.middlewares.tagakam-xix29f-54-redirect-to-www.redirectregex.regex=^https?://tagakam\\.de(/.*)?$"
       - "traefik.http.middlewares.tagakam-xix29f-54-redirect-to-www.redirectregex.replacement=https://www.tagakam.de$1"
       - "traefik.http.middlewares.tagakam-xix29f-54-redirect-to-www.redirectregex.permanent=true"
 
       # --- Routers ---
-
       # www -> sert le site
       - "traefik.http.routers.tagakam-xix29f-54-www.entrypoints=frontendsecure"
       - "traefik.http.routers.tagakam-xix29f-54-www.rule=Host(`www.tagakam.de`)"
