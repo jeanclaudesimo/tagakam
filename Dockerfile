@@ -29,6 +29,9 @@ RUN npm ci --only=production && npm cache clean --force
 # Copier le build depuis le builder
 COPY --from=builder /app/.output /app/.output
 
+# Copier le script de démarrage du serveur
+COPY server-start.mjs /app/server-start.mjs
+
 # Copier le script d'entrée
 COPY docker-entrypoint.sh /app/docker-entrypoint.sh
 RUN chmod +x /app/docker-entrypoint.sh

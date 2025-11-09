@@ -28,12 +28,18 @@ ls -la node_modules/ 2>/dev/null | head -10 || echo "node_modules not found"
 
 echo "Starting Node.js server with NODE_OPTIONS for better error reporting..."
 export NODE_OPTIONS="--trace-warnings --unhandled-rejections=strict"
-# Démarrer le serveur avec plus de logging et capture de toutes les sorties
-node .output/server/index.mjs 2>&1 || {
+
+# Vérifier que le fichier de démarrage existe
+if [ ! -f "server-start.mjs" ]; then
+  echo "ERROR: server-start.mjs not found!"
+  exit 1
+fi
+
+echo "Starting HTTP server with Nitro listener..."
+# Démarrer le serveur HTTP avec le listener Nitro
+node server-start.mjs 2>&1 || {
   EXIT_CODE=$?
   echo "Server exited with code: $EXIT_CODE"
-  echo "Checking if chunks/nitro/nitro.mjs exists..."
-  ls -la .output/server/chunks/nitro/nitro.mjs 2>/dev/null || echo "ERROR: chunks/nitro/nitro.mjs not found!"
   exit $EXIT_CODE
 }
 
