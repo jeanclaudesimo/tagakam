@@ -1,10 +1,10 @@
 import { createServer } from 'node:http'
-import { listener } from './.output/server/index.mjs'
+import { handler } from './.output/server/index.mjs'
 
 const port = Number(process.env.PORT || 3004)
 const host = process.env.HOST || process.env.HOSTNAME || '0.0.0.0'
 
-const server = createServer(listener)
+const server = createServer(handler)
 
 server.listen(port, host, () => {
   console.log(`🚀 Nitro server listening on http://${host}:${port}`)
