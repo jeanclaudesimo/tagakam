@@ -1,35 +1,39 @@
-# Multi-stage build für Production
+# -----------------------------
+# Stage 1: Builder
+# -----------------------------
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Package files kopieren und Dependencies installieren
+# Installer toutes les dépendances
 COPY package*.json ./
-RUN npm ci --only=production=false
+RUN npm ci
 
-# Source code kopieren
+# Copier le code source
 COPY . .
 
-# Nuxt App für Production builden
+# Build Nuxt/Nitro pour production
 RUN npm run build
 
-# Production Stage
-FROM node:20-alpine
+# -----------------------------
+# Stage 2: Production
+# -----------------------------
+FROM node:20-alpine AS production
 
 WORKDIR /app
 
-# Nur Production Dependencies installieren
+# Installer uniquement les dépendances de production
 COPY package*.json ./
 RUN npm ci --only=production && npm cache clean --force
 
-# Built app vom Builder Stage kopieren
+# Copier le build depuis le builder
 COPY --from=builder /app/.output /app/.output
 
-# Port exponieren
-EXPOSE 3004
-
-# Environment Variable für Production
+# Set NODE_ENV
 ENV NODE_ENV=production
 
-# Start command
+# Expose le port interne du conteneur
+EXPOSE 3004
+
+# Démarrage du serveur
 CMD ["node", ".output/server/index.mjs"]
