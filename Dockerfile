@@ -26,7 +26,7 @@ RUN npm ci --only=production && npm cache clean --force
 COPY --from=builder /app/.output /app/.output
 
 # Port exponieren
-EXPOSE 3003
+EXPOSE 3000
 
 # Environment Variable für Production
 ENV NODE_ENV=production
