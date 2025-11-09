@@ -13,6 +13,14 @@ if [ ! -f ".output/server/index.mjs" ]; then
   exit 1
 fi
 
-# Démarrer le serveur
-exec node .output/server/index.mjs
+echo "File .output/server/index.mjs exists, checking contents..."
+ls -lh .output/server/index.mjs
+head -20 .output/server/index.mjs || echo "Could not read file"
+
+echo "Starting Node.js server..."
+# Démarrer le serveur avec plus de logging
+node .output/server/index.mjs 2>&1 || {
+  echo "Server exited with code: $?"
+  exit 1
+}
 
