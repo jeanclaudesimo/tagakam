@@ -10,6 +10,8 @@ services:
       - NODE_ENV=production
       - PORT=3004
       - HOST=0.0.0.0
+      - NITRO_PORT=3004
+      - NITRO_HOST=0.0.0.0
       - NEXT_TELEMETRY_DISABLED=1
       - NUXT_PUBLIC_API_BASE=http://portal.digitalssolutions.de/api
     restart: unless-stopped

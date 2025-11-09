@@ -29,13 +29,19 @@ RUN npm ci --only=production && npm cache clean --force
 # Copier le build depuis le builder
 COPY --from=builder /app/.output /app/.output
 
+# Copier le script d'entrée
+COPY docker-entrypoint.sh /app/docker-entrypoint.sh
+RUN chmod +x /app/docker-entrypoint.sh
+
 # Set NODE_ENV, PORT and HOST
 ENV NODE_ENV=production
 ENV PORT=3004
 ENV HOST=0.0.0.0
+ENV NITRO_PORT=3004
+ENV NITRO_HOST=0.0.0.0
 
 # Expose le port interne du conteneur
 EXPOSE 3004
 
-# Démarrage du serveur
-CMD ["node", ".output/server/index.mjs"]
+# Démarrage du serveur via le script d'entrée
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
