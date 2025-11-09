@@ -35,7 +35,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: 'https://portal.digitalssolutions.de/api'
+      apiBase: 'http://portal.digitalssolutions.de/api'
     }
   }
 })
