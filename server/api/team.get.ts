@@ -1,11 +1,13 @@
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig(event)
+  
   try {
     // First, login to get token
     const loginResponse = await $fetch('https://portal.digitalssolutions.de/api/login', {
       method: 'POST',
       body: {
-        email: 'info@tagakam.de',
-        password: 'tagakam'
+        email: config.apiLoginEmail,
+        password: config.apiLoginPassword
       }
     })
 
