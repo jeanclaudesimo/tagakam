@@ -4,8 +4,8 @@ export default defineEventHandler(async (event) => {
     const loginResponse = await $fetch('https://portal.digitalssolutions.de/api/login', {
       method: 'POST',
       body: {
-        email: 'claude@c-simweb.de',
-        password: 'Da##29031990'
+        email: 'info@tagakam.de',
+        password: 'tagakam'
       }
     })
 
