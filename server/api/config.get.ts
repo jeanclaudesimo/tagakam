@@ -30,37 +30,9 @@ export default defineEventHandler(async (event) => {
     return configResponse
   } catch (error: any) {
     console.error('Server API error:', error)
-
-    // Return fallback data if API fails (matching exact API structure)
-    return {
-      contact: {
-        company_name: 'tagakam',
-        address_line1: 'Bergisch Gladbacher Str. 427',
-        address_line2: null,
-        postal_code: 'D-51067',
-        city: 'Köln',
-        country: 'Deutschland',
-        phone: '+49 221 2981 3937',
-        email: 'info@tagakam.de',
-        support_email: 'info@tagakam.de',
-        website: 'https://www.tagakam.de',
-        opening_hours: null,
-        social_links: null
-      },
-      smtp: {
-        host: null,
-        port: null,
-        username: 'info@tagakam.de',
-        password: 'tagakam.de',
-        encryption: null,
-        from_email: 'info@tagakam.de',
-        from_name: 'Tagakam'
-      },
-      tenant: {
-        id: 2,
-        name: 'tagakam',
-        domain: 'tagakam.de'
-      }
-    }
+    throw createError({
+      statusCode: error.statusCode || 500,
+      statusMessage: error.message || 'Failed to fetch configuration from API'
+    })
   }
 })

@@ -29,64 +29,9 @@ export default defineEventHandler(async (event) => {
     return teamResponse
   } catch (error: any) {
     console.error('Server API error:', error)
-
-    // Return fallback data if API fails
-    return {
-      team: [
-        {
-          id: 1,
-          name: 'Dipl.-Ing Brice Tagakam',
-          position: 'Geschäftsführer',
-          email: 'b.tagakam@tagakam.de',
-          avatar: null,
-          social: {
-            twitter: '',
-            facebook: '',
-            linkedin: ''
-          },
-          active: true
-        },
-        {
-          id: 2,
-          name: 'Doriane Ngatchie',
-          position: 'Praktikantin',
-          email: 'd.ngatchie@tagakam.de',
-          avatar: null,
-          social: {
-            twitter: '',
-            facebook: '',
-            linkedin: ''
-          },
-          active: true
-        },
-        {
-          id: 3,
-          name: 'Claude Simo',
-          position: 'IT',
-          email: 'it@tagakam.de',
-          avatar: null,
-          social: {
-            twitter: '',
-            facebook: '',
-            linkedin: ''
-          },
-          active: true
-        },
-        {
-          id: 4,
-          name: 'Stephanie',
-          position: 'Marketing',
-          email: 'step@tagakam.de',
-          avatar: null,
-          social: {
-            twitter: '',
-            facebook: '',
-            linkedin: ''
-          },
-          active: true
-        }
-      ].filter(member => member.active),
-      total: 4
-    }
+    throw createError({
+      statusCode: error.statusCode || 500,
+      statusMessage: error.message || 'Failed to fetch team from API'
+    })
   }
 })
