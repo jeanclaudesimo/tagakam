@@ -24,7 +24,7 @@ export const useFaqStore = defineStore('faq', {
       this.error = null
     },
 
-    setError(error: string) {
+    setError(error: string | null) {
       this.error = error
     },
 

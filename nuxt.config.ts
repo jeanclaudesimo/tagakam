@@ -39,7 +39,8 @@ export default defineNuxtConfig({
     // Private keys (only available on server-side)
     apiLoginEmail: process.env.API_LOGIN_EMAIL || 'info@tagakam.de',
     apiLoginPassword: process.env.API_LOGIN_PASSWORD || 'tagakam',
-    
+    apiTenantKey: process.env.API_TENANT_KEY || '',
+
     public: {
       apiBase: 'http://portal.digitalssolutions.de/api'
     }
