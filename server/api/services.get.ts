@@ -1,37 +1,27 @@
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig(event)
-  
+  const config = useRuntimeConfig()
+  const tenantKey = config.apiTenantKey
+
+  if (!tenantKey) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'API_TENANT_KEY is not configured'
+    })
+  }
+
   try {
-    // First, login to get token
-    const loginResponse = await $fetch('https://portal.digitalssolutions.de/api/login', {
-      method: 'POST',
-      body: {
-        email: config.apiLoginEmail,
-        password: config.apiLoginPassword
+    const response = await $fetch(`${config.public.apiBase}/services`, {
+      params: {
+        tenant_key: tenantKey
       }
     })
 
-    // Extract token from response
-    const token = (loginResponse as any).token
-
-    if (!token) {
-      throw new Error('No token received from login')
-    }
-
-    // Then fetch services with the token
-    const servicesResponse = await $fetch('https://portal.digitalssolutions.de/api/services', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-
-    return servicesResponse
+    return response
   } catch (error: any) {
-    console.error('Server API error:', error)
+    console.error('Error fetching services from portal:', error)
     throw createError({
       statusCode: error.statusCode || 500,
-      statusMessage: error.message || 'Failed to fetch services from API'
+      statusMessage: error.message || 'Failed to fetch services'
     })
   }
 })
