@@ -23,30 +23,30 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-net"
-
-      # --- Middlewares ---
-      # Force HTTPS dans les requêtes internes
-      - "traefik.http.middlewares.tagakam-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
-
-      # Redirection du domaine nu -> www (nom unique pour éviter conflits)
-      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.regex=^https?://tagakam\\.de(.*)"
-      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.replacement=https://www.tagakam.de$1"
-      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.permanent=true"
-
-      # --- Routers ---
-      # www.ondiffoline.de -> sert le site
-      - "traefik.http.routers.tagakam-www.entrypoints=frontendsecure"
-      - "traefik.http.routers.tagakam-www.rule=Host(`www.tagakam.de`)"
-      - "traefik.http.routers.tagakam-www.tls=true"
-      - "traefik.http.routers.tagakam-www.service=tagakam"
-      - "traefik.http.routers.tagakam-www.middlewares=tagakam-headers"
-
-      # ondiffoline.de -> redirection vers www
-      - "traefik.http.routers.tagakam-root.entrypoints=frontendsecure"
+    
+      # HTTP (Port 80) → Redirect auf HTTPS
+      - "traefik.http.routers.tagakam-http.entrypoints=web"
+      - "traefik.http.routers.tagakam-http.rule=Host(`www.tagakam.de`)"
+      - "traefik.http.routers.tagakam-http.middlewares=tagakam-https"
+      
+      - "traefik.http.middlewares.tagakam-https.redirectscheme.scheme=https"
+    
+      # Redirect tagakam.de → www.tagakam.de
+      - "traefik.http.routers.tagakam-root.entrypoints=websecure"
       - "traefik.http.routers.tagakam-root.rule=Host(`tagakam.de`)"
+      - "traefik.http.routers.tagakam-root.middlewares=tagakam-www-redirect"
       - "traefik.http.routers.tagakam-root.tls=true"
-      - "traefik.http.routers.tagakam-root.middlewares=tagakam-redirect-to-www@docker"
-      - "traefik.http.routers.tagakam-root.service=noop@internal"
+    
+      - "traefik.http.middlewares.tagakam-www-redirect.redirectregex.regex=^https?://tagakam\\.de(.*)"
+      - "traefik.http.middlewares.tagakam-www-redirect.redirectregex.replacement=https://www.tagakam.de$1"
+      - "traefik.http.middlewares.tagakam-www-redirect.redirectregex.permanent=true"
+    
+      # HTTPS Router
+      - "traefik.http.routers.tagakam.entrypoints=websecure"
+      - "traefik.http.routers.tagakam.rule=Host(`www.tagakam.de`)"
+      - "traefik.http.routers.tagakam.tls=true"
+      - "traefik.http.routers.tagakam.service=tagakam"
+
 
 networks:
   traefik-net:
