@@ -26,6 +26,7 @@ services:
 
       # Service -> port INTERNE (3004)
       - "traefik.http.services.tagakam-xix29f-54.loadbalancer.server.port=3004"
+      - "traefik.http.routers.tagakam-xix29f-54-secure.tls.certresolver=leresolver"
 
       # --- Middlewares ---
       - "traefik.http.middlewares.tagakam-xix29f-54-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
