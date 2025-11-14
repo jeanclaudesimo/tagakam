@@ -24,9 +24,6 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-net"
 
-      # --- Service ---
-      - "traefik.http.services.tagakam.loadbalancer.server.port=3004"
-
       # --- Middlewares ---
       # Force HTTPS dans les requêtes internes
       - "traefik.http.middlewares.tagakam-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
