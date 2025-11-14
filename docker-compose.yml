@@ -40,6 +40,7 @@ services:
       # www -> sert le site
       - "traefik.http.routers.tagakam-xix29f-54-www.entrypoints=frontendsecure"
       - "traefik.http.routers.tagakam-xix29f-54-www.rule=Host(`www.tagakam.de`)"
+      - "traefik.http.routers.tagakam-xix29f-54-www.secure.tls.certresolver=leresolver"
       - "traefik.http.routers.tagakam-xix29f-54-www.tls=true"
       - "traefik.http.routers.tagakam-xix29f-54-www.service=tagakam-xix29f-54"
       - "traefik.http.routers.tagakam-xix29f-54-www.middlewares=tagakam-xix29f-54-headers"
