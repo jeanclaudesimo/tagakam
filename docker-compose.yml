@@ -24,17 +24,32 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-net"
 
-      # Service -> port INTERNE (3004)
-      - "traefik.http.services.tagakam-xix29f-54.loadbalancer.server.port=3004"
-      - "traefik.http.routers.tagakam-xix29f-54-secure.tls.certresolver=leresolver"
+      # --- Service ---
+      - "traefik.http.services.tagakam.loadbalancer.server.port=3004"
 
       # --- Middlewares ---
-      - "traefik.http.middlewares.tagakam-xix29f-54-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
+      # Force HTTPS dans les requêtes internes
+      - "traefik.http.middlewares.tagakam-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
 
-      # Redirection apex -> www
-      - "traefik.http.middlewares.tagakam-xix29f-54-redirect-to-www.redirectregex.regex=^https?://tagakam\\.de(/.*)?$"
-      - "traefik.http.middlewares.tagakam-xix29f-54-redirect-to-www.redirectregex.replacement=https://www.tagakam.de$1"
-      - "traefik.http.middlewares.tagakam-xix29f-54-redirect-to-www.redirectregex.permanent=true"
+      # Redirection du domaine nu -> www (nom unique pour éviter conflits)
+      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.regex=^https?://tagakam\\.de(.*)"
+      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.replacement=https://www.tagakam.de$1"
+      - "traefik.http.middlewares.tagakam-redirect-to-www.redirectregex.permanent=true"
+
+      # --- Routers ---
+      # www.ondiffoline.de -> sert le site
+      - "traefik.http.routers.tagakam-www.entrypoints=frontendsecure"
+      - "traefik.http.routers.tagakam-www.rule=Host(`www.tagakm.de`)"
+      - "traefik.http.routers.tagakam-www.tls=true"
+      - "traefik.http.routers.tagakam-www.service=tagakam"
+      - "traefik.http.routers.tagakam-www.middlewares=tagakam-headers"
+
+      # ondiffoline.de -> redirection vers www
+      - "traefik.http.routers.tagakam-root.entrypoints=frontendsecure"
+      - "traefik.http.routers.tagakam-root.rule=Host(`tagakam.de`)"
+      - "traefik.http.routers.tagakam-root.tls=true"
+      - "traefik.http.routers.tagakam-root.middlewares=tagakam-redirect-to-www@docker"
+      - "traefik.http.routers.tagakam-root.service=noop@internal"
 
 networks:
   traefik-net:
