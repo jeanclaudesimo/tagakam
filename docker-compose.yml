@@ -25,14 +25,14 @@ services:
       - "traefik.docker.network=traefik-net"
     
       # HTTP (Port 80) → Redirect auf HTTPS
-      - "traefik.http.routers.tagakam-http.entrypoints=web"
+      - "traefik.http.routers.tagakam-http.entrypoints=frontendsecure"
       - "traefik.http.routers.tagakam-http.rule=Host(`www.tagakam.de`)"
       - "traefik.http.routers.tagakam-http.middlewares=tagakam-https"
       
       - "traefik.http.middlewares.tagakam-https.redirectscheme.scheme=https"
     
       # Redirect tagakam.de → www.tagakam.de
-      - "traefik.http.routers.tagakam-root.entrypoints=websecure"
+      - "traefik.http.routers.tagakam-root.entrypoints=frontendsecure"
       - "traefik.http.routers.tagakam-root.rule=Host(`tagakam.de`)"
       - "traefik.http.routers.tagakam-root.middlewares=tagakam-www-redirect"
       - "traefik.http.routers.tagakam-root.tls=true"
@@ -42,7 +42,7 @@ services:
       - "traefik.http.middlewares.tagakam-www-redirect.redirectregex.permanent=true"
     
       # HTTPS Router
-      - "traefik.http.routers.tagakam.entrypoints=websecure"
+      - "traefik.http.routers.tagakam.entrypoints=frontendsecure"
       - "traefik.http.routers.tagakam.rule=Host(`www.tagakam.de`)"
       - "traefik.http.routers.tagakam.tls=true"
       - "traefik.http.routers.tagakam.service=tagakam"
