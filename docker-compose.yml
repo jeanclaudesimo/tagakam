@@ -39,7 +39,7 @@ services:
       # --- Routers ---
       # www.ondiffoline.de -> sert le site
       - "traefik.http.routers.tagakam-www.entrypoints=frontendsecure"
-      - "traefik.http.routers.tagakam-www.rule=Host(`www.tagakm.de`)"
+      - "traefik.http.routers.tagakam-www.rule=Host(`www.tagakam.de`)"
       - "traefik.http.routers.tagakam-www.tls=true"
       - "traefik.http.routers.tagakam-www.service=tagakam"
       - "traefik.http.routers.tagakam-www.middlewares=tagakam-headers"
