@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: tagakam
     ports:
-      - "3004:3000"   # le conteneur écoute maintenant sur 3004
+      - "3004:3004"   # le conteneur écoute maintenant sur 3004
     environment:
       - NODE_ENV=production
       - PORT=3004
