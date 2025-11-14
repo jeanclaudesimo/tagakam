@@ -40,7 +40,6 @@ services:
       # www -> sert le site
       - "traefik.http.routers.tagakam-xix29f-54-www.entrypoints=frontendsecure"
       - "traefik.http.routers.tagakam-xix29f-54-www.rule=Host(`www.tagakam.de`)"
-      - "traefik.http.routers.tagakam-xix29f-54-www.secure.tls.certresolver=leresolver"
       - "traefik.http.routers.tagakam-xix29f-54-www.tls=true"
       - "traefik.http.routers.tagakam-xix29f-54-www.service=tagakam-xix29f-54"
       - "traefik.http.routers.tagakam-xix29f-54-www.middlewares=tagakam-xix29f-54-headers"
@@ -48,7 +47,6 @@ services:
       # apex -> applique la redirection (vers www)
       - "traefik.http.routers.tagakam-xix29f-54-root.entrypoints=frontendsecure"
       - "traefik.http.routers.tagakam-xix29f-54-root.rule=Host(`tagakam.de`)"
-      - "traefik.http.routers.tagakam-xix29f-54-root.secure.tls.certresolver=leresolver"
       - "traefik.http.routers.tagakam-xix29f-54-root.tls=true"
       - "traefik.http.routers.tagakam-xix29f-54-root.middlewares=tagakam-xix29f-54-redirect-to-www@docker"
       - "traefik.http.routers.tagakam-xix29f-54-root.service=noop@internal"
