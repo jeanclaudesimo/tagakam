@@ -60,6 +60,7 @@ export interface Service {
   icon: string
   image: string
   active: boolean
+  serviceItems?: string[] // Liste des services détaillés pour chaque catégorie
 }
 
 export interface ServicesResponse {

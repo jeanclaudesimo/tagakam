@@ -10,39 +10,59 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div
           v-for="(service, index) in services"
           :key="index"
-          class="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+          class="group relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden flex flex-col"
         >
           <!-- Image -->
-          <div class="relative h-64 overflow-hidden">
+          <div class="relative h-48 overflow-hidden">
             <img
               :src="service.image"
               :alt="service.title"
               class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
             >
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-          </div>
-
-          <!-- Content -->
-          <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
-            <div class="flex items-center space-x-3 mb-3">
-              <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center">
-                <Icon :name="service.icon" class="text-2xl" />
+            <div class="absolute inset-0 bg-gradient-to-t from-primary-600/80 to-transparent"></div>
+            <!-- Icon on image -->
+            <div class="absolute top-4 left-4">
+              <div class="w-14 h-14 bg-white/95 backdrop-blur-md rounded-xl flex items-center justify-center shadow-lg">
+                <Icon :name="service.icon" class="text-3xl text-primary-600" />
               </div>
-              <h3 class="text-2xl font-bold">{{ service.title }}</h3>
             </div>
-            <p class="text-white/90 leading-relaxed">{{ service.description }}</p>
           </div>
 
-          <!-- Hover overlay -->
-          <div class="absolute inset-0 bg-gradient-to-br from-primary-600/90 to-secondary-600/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-            <div class="text-center p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-              <Icon :name="service.icon" class="text-6xl text-white mb-4 mx-auto" />
-              <h3 class="text-2xl font-bold text-white mb-3">{{ service.title }}</h3>
-              <p class="text-white/90">{{ service.detailedDescription }}</p>
+          <!-- Content - Always visible -->
+          <div class="flex-1 p-6 flex flex-col">
+            <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ service.title }}</h3>
+            <p class="text-gray-700 leading-relaxed mb-4">{{ service.description }}</p>
+            
+            <!-- Liste des services détaillés - Always visible -->
+            <div v-if="service.serviceItems && service.serviceItems.length > 0" class="flex-1">
+              <ul class="list-disc list-inside space-y-2 text-sm text-gray-600">
+                <li v-for="(item, itemIndex) in service.serviceItems" :key="itemIndex" class="leading-relaxed">
+                  {{ item }}
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Hover overlay with detailed description -->
+          <div class="absolute inset-0 bg-gradient-to-br from-primary-600/95 to-secondary-600/95 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-y-auto">
+            <div class="p-6 h-full flex flex-col">
+              <div class="text-center mb-4">
+                <Icon :name="service.icon" class="text-6xl text-white mb-4 mx-auto" />
+                <h3 class="text-2xl font-bold text-white mb-3">{{ service.title }}</h3>
+                <p class="text-white/90 mb-4 leading-relaxed">{{ service.detailedDescription }}</p>
+              </div>
+              <!-- Liste des services détaillés dans l'overlay -->
+              <div v-if="service.serviceItems && service.serviceItems.length > 0" class="flex-1">
+                <ul class="list-disc list-inside space-y-2 text-sm text-white/90 text-left max-w-md mx-auto">
+                  <li v-for="(item, itemIndex) in service.serviceItems" :key="itemIndex" class="leading-relaxed">
+                    {{ item }}
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

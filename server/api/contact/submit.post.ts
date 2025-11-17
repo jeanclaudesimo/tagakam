@@ -23,8 +23,16 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Tenant API Key
-    const tenantKey = 'cadb2a1ce2bdfe436682785867a1beec91be9dd8644eba4b7abab15a632da6fc'
+    // Get tenant API key from runtime config
+    const config = useRuntimeConfig(event)
+    const tenantKey = config.apiTenantKey
+
+    if (!tenantKey) {
+      throw createError({
+        statusCode: 500,
+        message: 'API_TENANT_KEY is not configured'
+      })
+    }
 
     // Daten an portal.digitalssolutions.de senden
     const response = await $fetch('https://portal.digitalssolutions.de/api/contact/submit', {
