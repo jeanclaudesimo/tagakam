@@ -36,6 +36,7 @@ services:
       - "traefik.http.routers.tagakam-root.rule=Host(`tagakam.de`)"
       - "traefik.http.routers.tagakam-root.middlewares=tagakam-www-redirect"
       - "traefik.http.routers.tagakam-root.tls=true"
+      - "traefik.http.routers.kfz.tls.certresolver=leresolver"
     
       - "traefik.http.middlewares.tagakam-www-redirect.redirectregex.regex=^https?://tagakam\\.de(.*)"
       - "traefik.http.middlewares.tagakam-www-redirect.redirectregex.replacement=https://www.tagakam.de$1"
