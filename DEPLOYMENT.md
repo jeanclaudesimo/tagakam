@@ -62,12 +62,12 @@ Si vous utilisez Dokploy :
 
 **Causes possibles :**
 1. `API_TENANT_KEY` n'est pas configuré
-2. Timeout de connexion (le serveur ne peut pas accéder à `portal.digitalssolutions.de`)
+2. Timeout de connexion (le serveur ne peut pas accéder à `http://portal.digitalssolutions.de`)
 3. Problème de réseau/firewall
 
 **Solutions :**
 1. Vérifiez que `API_TENANT_KEY` est configuré
-2. Vérifiez que le serveur peut faire des requêtes HTTPS sortantes vers `portal.digitalssolutions.de`
+2. Vérifiez que le serveur peut faire des requêtes HTTP sortantes vers `portal.digitalssolutions.de`
 3. Vérifiez les logs du serveur pour plus de détails
 
 ### L'application est lente à charger

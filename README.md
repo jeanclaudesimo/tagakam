@@ -65,9 +65,9 @@ Die Website nutzt sowohl lokale API-Simulationen als auch externe APIs von porta
 
 ### Externe API-Endpunkte
 
-- **Login**: `POST https://portal.digitalssolutions.de/api/login`
-- **Config**: `GET https://portal.digitalssolutions.de/api/config`
-- **Contact Submit**: `POST https://portal.digitalssolutions.de/api/contact/submit`
+- **Login**: `POST http://portal.digitalssolutions.de/api/login`
+- **Config**: `GET http://portal.digitalssolutions.de/api/config`
+- **Contact Submit**: `POST http://portal.digitalssolutions.de/api/contact/submit`
 
 **Hinweis**: Die Endpunkte `/api/services`, `/api/team` und `/api/faq` sind aktuell nur als lokale Simulationen implementiert. Siehe `API-DOCUMENTATION.md` für die vollständige Spezifikation zur Implementierung dieser Endpunkte im Backend.
 
@@ -166,8 +166,8 @@ API_TENANT_KEY=ce9563cab5f81156b3c1f6ba86ace15c5c1c48f97c4a4a68049d7e84f10a4d23
 ### Optionale Variablen
 
 ```bash
-# Portal API URL (Standard: https://portal.digitalssolutions.de/api)
-NUXT_PORTAL_API_URL=https://portal.digitalssolutions.de/api
+# Portal API URL (Standard: http://portal.digitalssolutions.de/api)
+NUXT_PORTAL_API_URL=http://portal.digitalssolutions.de/api
 
 # Site Configuration
 NUXT_PUBLIC_SITE_URL=https://www.tagakam.de

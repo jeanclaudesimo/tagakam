@@ -50,7 +50,7 @@ export default defineNuxtConfig({
       companyPhone: process.env.NUXT_PUBLIC_COMPANY_PHONE || '+49 123 456789',
 
       // Portal API configuration
-      portalApiUrl: process.env.NUXT_PORTAL_API_URL || 'https://portal.digitalssolutions.de/api',
+      portalApiUrl: process.env.NUXT_PORTAL_API_URL || 'http://portal.digitalssolutions.de/api',
       portalApiKey: process.env.NUXT_PORTAL_API_KEY || 'ce9563cab5f81156b3c1f6ba86ace15c5c1c48f97c4a4a68049d7e84f10a4d23'
     }
   }

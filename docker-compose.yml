@@ -14,6 +14,7 @@ services:
       - NITRO_HOST=0.0.0.0
       - NEXT_TELEMETRY_DISABLED=1
       - NUXT_PUBLIC_API_BASE=http://portal.digitalssolutions.de/api
+      - NUXT_PORTAL_API_URL=http://portal.digitalssolutions.de/api
       # API Authentication for JWT token (endpoint /config)
       - API_LOGIN_EMAIL=info@tagakam.de
       - API_LOGIN_PASSWORD=tagakam
