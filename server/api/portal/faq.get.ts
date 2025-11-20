@@ -18,18 +18,33 @@ export default defineEventHandler(async (event) => {
       },
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      timeout: 15000, // 15 secondes timeout
+      retry: 1, // Retry une fois en cas d'échec
+      retryDelay: 1000 // Attendre 1 seconde avant le retry
     })
 
     return response
   } catch (error: any) {
     const status = error.statusCode || error.status || 500
     const message = error.message || error.data?.message || 'Failed to fetch FAQs'
-    console.error('[API] Failed to fetch FAQs:', {
-      status,
-      message,
-      details: error.data || error
-    })
+    
+    // Ne pas logger les erreurs de timeout/connection comme des erreurs critiques
+    const isTimeout = error.cause?.name === 'ConnectTimeoutError' || 
+                     error.message?.includes('timeout') ||
+                     error.message?.includes('fetch failed')
+    
+    if (isTimeout) {
+      console.warn('[API] Timeout connecting to FAQ API - using local data')
+    } else {
+      console.error('[API] Failed to fetch FAQs:', {
+        status,
+        message,
+        details: error.data || error
+      })
+    }
+    
+    // Lancer l'erreur pour que le store puisse utiliser les données locales
     throw createError({
       statusCode: status,
       message

@@ -32,7 +32,10 @@ export async function getApiToken(event?: H3Event): Promise<string | null> {
         body: {
           email,
           password
-        }
+        },
+        timeout: 10000, // 10 secondes timeout pour le login
+        retry: 1, // Retry une fois en cas d'échec
+        retryDelay: 1000 // Attendre 1 seconde avant le retry
       }
     )
 

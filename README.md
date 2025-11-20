@@ -148,6 +148,53 @@ runtimeConfig: {
 ### Kontaktdaten
 Die Kontaktdaten werden automatisch von der API geladen. Als Fallback sind statische Daten in den Komponenten definiert.
 
+## 🔐 Environment Variables (Production)
+
+Für die API-Integration müssen folgende Environment-Variablen in der Production-Umgebung gesetzt werden:
+
+### Erforderliche Variablen
+
+```bash
+# API Authentication für /config endpoint (JWT Token)
+API_LOGIN_EMAIL=info@tagakam.de
+API_LOGIN_PASSWORD=tagakam
+
+# Tenant Key für /services, /team, /faq endpoints
+API_TENANT_KEY=ce9563cab5f81156b3c1f6ba86ace15c5c1c48f97c4a4a68049d7e84f10a4d23
+```
+
+### Optionale Variablen
+
+```bash
+# Portal API URL (Standard: https://portal.digitalssolutions.de/api)
+NUXT_PORTAL_API_URL=https://portal.digitalssolutions.de/api
+
+# Site Configuration
+NUXT_PUBLIC_SITE_URL=https://www.tagakam.de
+NUXT_PUBLIC_COMPANY_NAME=TaGaKaM&Co
+NUXT_PUBLIC_COMPANY_EMAIL=info@tagakam.de
+NUXT_PUBLIC_COMPANY_PHONE=+49 221 2981 3937
+```
+
+### Docker/Docker Compose
+
+In `docker-compose.yml` sind die Variablen bereits referenziert. Stellen Sie sicher, dass sie in Ihrer `.env` Datei oder in Ihrem Deployment-System (z.B. Dokploy) gesetzt sind:
+
+```yaml
+environment:
+  - API_LOGIN_EMAIL=${API_LOGIN_EMAIL}
+  - API_LOGIN_PASSWORD=${API_LOGIN_PASSWORD}
+  - API_TENANT_KEY=${API_TENANT_KEY}
+```
+
+### Wichtige Hinweise
+
+1. **API Timeout**: Die API-Endpunkte haben einen Timeout von 15 Sekunden. Bei Verbindungsproblemen wird automatisch auf lokale Daten zurückgegriffen.
+
+2. **Fallback-Verhalten**: Wenn die API nicht erreichbar ist oder die Authentifizierung fehlschlägt, verwendet die Anwendung automatisch die lokalen Daten aus dem `data/` Verzeichnis.
+
+3. **Sicherheit**: Die `API_LOGIN_PASSWORD` sollte niemals im Code hardcodiert werden. Verwenden Sie immer Environment-Variablen oder ein Secrets-Management-System.
+
 ### Styling
 Anpassungen können in `assets/css/main.css` und `tailwind.config.ts` vorgenommen werden.
 
