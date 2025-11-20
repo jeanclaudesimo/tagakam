@@ -8,7 +8,8 @@ export default defineEventHandler(async (event) => {
       body: {
         email: config.apiLoginEmail,
         password: config.apiLoginPassword
-      }
+      },
+      timeout: 30000 // 30 seconds timeout
     })
 
     // Extract token from response
@@ -23,7 +24,8 @@ export default defineEventHandler(async (event) => {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
-      }
+      },
+      timeout: 30000 // 30 seconds timeout
     })
 
     console.log('Config API response:', JSON.stringify(configResponse, null, 2))

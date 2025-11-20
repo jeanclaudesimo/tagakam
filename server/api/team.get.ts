@@ -13,7 +13,8 @@ export default defineEventHandler(async (event) => {
     const response = await $fetch(`${config.public.apiBase}/team`, {
       params: {
         tenant_key: tenantKey
-      }
+      },
+      timeout: 30000 // 30 seconds timeout
     })
 
     return response
