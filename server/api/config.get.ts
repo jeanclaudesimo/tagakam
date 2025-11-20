@@ -18,7 +18,8 @@ export default defineEventHandler(async (event) => {
         email: config.apiLoginEmail,
         password: config.apiLoginPassword
       },
-      timeout: 30000 // 30 seconds timeout
+      timeout: 30000, // 30 seconds timeout
+      redirect: 'follow' // Follow redirects explicitly
     })
 
     // Extract token from response
@@ -34,7 +35,8 @@ export default defineEventHandler(async (event) => {
       headers: {
         'Authorization': `Bearer ${token}`
       },
-      timeout: 30000 // 30 seconds timeout
+      timeout: 30000, // 30 seconds timeout
+      redirect: 'follow' // Follow redirects explicitly
     })
 
     // Cache the successful response

@@ -23,7 +23,8 @@ export default defineEventHandler(async (event) => {
       params: {
         tenant_key: tenantKey
       },
-      timeout: 30000 // 30 seconds timeout
+      timeout: 30000, // 30 seconds timeout
+      redirect: 'follow' // Follow redirects explicitly
     })
 
     // Cache the successful response
