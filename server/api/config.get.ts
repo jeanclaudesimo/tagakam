@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   try {
     console.log('Fetching config from portal...')
     // First, login to get token
-    const loginResponse = await $fetch('https://portal.digitalssolutions.de/api/login', {
+    const loginResponse = await $fetch('http://portal.digitalssolutions.de/api/login', {
       method: 'POST',
       body: {
         email: config.apiLoginEmail,
@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Then fetch config with the token
-    const configResponse = await $fetch('https://portal.digitalssolutions.de/api/config', {
+    const configResponse = await $fetch('http://portal.digitalssolutions.de/api/config', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`

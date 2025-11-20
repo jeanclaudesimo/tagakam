@@ -42,7 +42,7 @@ export default defineNuxtConfig({
     apiTenantKey: process.env.API_TENANT_KEY || 'ce9563cab5f81156b3c1f6ba86ace15c5c1c48f97c4a4a68049d7e84f10a4d23',
 
     public: {
-      apiBase: 'https://portal.digitalssolutions.de/api'
+      apiBase: 'http://portal.digitalssolutions.de/api'
     }
   }
 })
