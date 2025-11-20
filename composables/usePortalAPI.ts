@@ -29,20 +29,9 @@ export const usePortalAPI = () => {
     }
   }
 
-  const getConfig = async () => {
-    try {
-      const response = await $fetch('/api/portal/config')
-      return response
-    } catch (error: any) {
-      // Silently fail - stores will use local data
-      throw new Error('API_FAILED')
-    }
-  }
-
   return {
     getServices,
     getTeam,
-    getFaqs,
-    getConfig
+    getFaqs
   }
 }

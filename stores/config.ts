@@ -20,16 +20,9 @@ export const useConfigStore = defineStore('config', {
       this.loading = true
       this.error = null
 
-      try {
-        const api = usePortalAPI()
-        const data = await api.getConfig()
-        this.config = data
-      } catch (error: any) {
-        // Silently fall back to local data
-        this.config = configData
-      } finally {
-        this.loading = false
-      }
+      // Use local data directly - no API call
+      this.config = configData
+      this.loading = false
     }
   }
 })
