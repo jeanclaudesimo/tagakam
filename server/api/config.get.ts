@@ -1,7 +1,16 @@
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
-  
+
+  // Check cache first (10 minutes TTL for config)
+  const cacheKey = 'portal_config'
+  const cached = getCached(cacheKey, 10)
+  if (cached) {
+    console.log('Returning cached config data')
+    return cached
+  }
+
   try {
+    console.log('Fetching config from portal...')
     // First, login to get token
     const loginResponse = await $fetch('https://portal.digitalssolutions.de/api/login', {
       method: 'POST',
@@ -28,13 +37,37 @@ export default defineEventHandler(async (event) => {
       timeout: 30000 // 30 seconds timeout
     })
 
-    console.log('Config API response:', JSON.stringify(configResponse, null, 2))
+    // Cache the successful response
+    setCache(cacheKey, configResponse)
+    console.log('Config fetched and cached successfully')
+
     return configResponse
   } catch (error: any) {
     console.error('Server API error:', error)
-    throw createError({
-      statusCode: error.statusCode || 500,
-      statusMessage: error.message || 'Failed to fetch configuration from API'
-    })
+    console.log('Returning fallback config data')
+
+    // Return fallback config instead of throwing error
+    const fallbackConfig = {
+      company: {
+        name: 'TaGaKaM&Co',
+        email: 'info@tagakam.de',
+        phone: '+49 123 456789',
+        address: 'Deutschland'
+      },
+      social: {
+        facebook: '',
+        twitter: '',
+        linkedin: '',
+        instagram: ''
+      },
+      settings: {
+        maintenanceMode: false
+      }
+    }
+
+    // Cache the fallback config
+    setCache(cacheKey, fallbackConfig)
+
+    return fallbackConfig
   }
 })

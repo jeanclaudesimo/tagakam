@@ -1,7 +1,16 @@
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
-  
+
+  // Check cache first (5 minutes TTL)
+  const cacheKey = 'portal_services'
+  const cached = getCached(cacheKey, 5)
+  if (cached) {
+    console.log('Returning cached services data')
+    return cached
+  }
+
   try {
+    console.log('Fetching services from portal...')
     // First, login to get token
     const loginResponse = await $fetch('https://portal.digitalssolutions.de/api/login', {
       method: 'POST',
@@ -31,6 +40,9 @@ export default defineEventHandler(async (event) => {
     // Si l'API retourne des données, les utiliser
     // Sinon, retourner la simulation basée sur l'image
     if (servicesResponse && (servicesResponse as any).services && (servicesResponse as any).services.length > 0) {
+      // Cache the successful response
+      setCache(cacheKey, servicesResponse)
+      console.log('Services fetched and cached successfully')
       return servicesResponse
     }
 
