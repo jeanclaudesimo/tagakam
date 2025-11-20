@@ -4,12 +4,7 @@ export const usePortalAPI = () => {
       const response = await $fetch('/api/portal/services')
       return response
     } catch (error: any) {
-      const status = error.statusCode || error.status
-      if (status === 401 || status === 403) {
-        console.warn('[API] Authentication failed - using local data')
-      } else {
-        console.warn('[API] Failed to fetch services - using local data')
-      }
+      // Silently fail - stores will use local data
       throw new Error('API_FAILED')
     }
   }
@@ -19,12 +14,7 @@ export const usePortalAPI = () => {
       const response = await $fetch('/api/portal/team')
       return response
     } catch (error: any) {
-      const status = error.statusCode || error.status
-      if (status === 401 || status === 403) {
-        console.warn('[API] Authentication failed - using local data')
-      } else {
-        console.warn('[API] Failed to fetch team - using local data')
-      }
+      // Silently fail - stores will use local data
       throw new Error('API_FAILED')
     }
   }
@@ -34,12 +24,7 @@ export const usePortalAPI = () => {
       const response = await $fetch('/api/portal/faq')
       return response
     } catch (error: any) {
-      const status = error.statusCode || error.status
-      if (status === 401 || status === 403) {
-        console.warn('[API] Authentication failed - using local data')
-      } else {
-        console.warn('[API] Failed to fetch FAQs - using local data')
-      }
+      // Silently fail - stores will use local data
       throw new Error('API_FAILED')
     }
   }
@@ -49,12 +34,7 @@ export const usePortalAPI = () => {
       const response = await $fetch('/api/portal/config')
       return response
     } catch (error: any) {
-      const status = error.statusCode || error.status
-      if (status === 401 || status === 403) {
-        console.warn('[API] Authentication failed - using local data')
-      } else {
-        console.warn('[API] Failed to fetch config - using local data')
-      }
+      // Silently fail - stores will use local data
       throw new Error('API_FAILED')
     }
   }
