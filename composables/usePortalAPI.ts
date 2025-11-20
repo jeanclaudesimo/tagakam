@@ -5,7 +5,7 @@ export const usePortalAPI = () => {
 
   const client = axios.create({
     baseURL: config.public.portalApiUrl as string,
-    timeout: 30000,
+    timeout: 10000,
     headers: {
       'Content-Type': 'application/json'
     }
