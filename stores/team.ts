@@ -20,16 +20,9 @@ export const useTeamStore = defineStore('team', {
       this.loading = true
       this.error = null
 
-      try {
-        const api = usePortalAPI()
-        const data = await api.getTeam()
-        this.team = data.team || []
-      } catch (error: any) {
-        // Silently fall back to local data
-        this.team = teamData
-      } finally {
-        this.loading = false
-      }
+      // Use local data directly - no API call
+      this.team = teamData
+      this.loading = false
     }
   }
 })

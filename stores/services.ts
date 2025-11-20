@@ -20,16 +20,9 @@ export const useServicesStore = defineStore('services', {
       this.loading = true
       this.error = null
 
-      try {
-        const api = usePortalAPI()
-        const data = await api.getServices()
-        this.services = data.services || []
-      } catch (error: any) {
-        // Silently fall back to local data
-        this.services = servicesData
-      } finally {
-        this.loading = false
-      }
+      // Use local data directly - no API call
+      this.services = servicesData
+      this.loading = false
     }
   }
 })

@@ -20,16 +20,9 @@ export const useFaqStore = defineStore('faq', {
       this.loading = true
       this.error = null
 
-      try {
-        const api = usePortalAPI()
-        const data = await api.getFaqs()
-        this.faqs = data.faqs || []
-      } catch (error: any) {
-        // Silently fall back to local data
-        this.faqs = faqData
-      } finally {
-        this.loading = false
-      }
+      // Use local data directly - no API call
+      this.faqs = faqData
+      this.loading = false
     }
   }
 })
