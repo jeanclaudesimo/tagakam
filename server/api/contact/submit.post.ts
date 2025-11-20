@@ -23,25 +23,28 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Get tenant API key from runtime config
-    const config = useRuntimeConfig(event)
-    const tenantKey = config.apiTenantKey
+    // Get API token for authentication
+    const { getApiToken } = await import('~/server/utils/apiAuth')
+    const token = await getApiToken(event)
 
-    if (!tenantKey) {
+    if (!token) {
       throw createError({
         statusCode: 500,
-        message: 'API_TENANT_KEY is not configured'
+        message: 'API authentication failed - please configure API_LOGIN_EMAIL and API_LOGIN_PASSWORD'
       })
     }
 
+    const config = useRuntimeConfig(event)
+    const apiUrl = config.public.portalApiUrl as string
+
     // Daten an portal.digitalssolutions.de senden
-    const response = await $fetch('https://portal.digitalssolutions.de/api/contact/submit', {
+    const response = await $fetch(`${apiUrl}/contact/submit`, {
       method: 'POST',
       headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
       body: {
-        tenant_key: tenantKey,
         name,
         email,
         phone: phone || '',

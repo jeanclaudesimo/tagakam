@@ -39,6 +39,8 @@ export default defineNuxtConfig({
     contactFormEnabled: process.env.NUXT_CONTACT_FORM_ENABLED === 'true',
     contactFormToEmail: process.env.NUXT_CONTACT_FORM_TO_EMAIL || 'info@tagakam.de',
     apiTenantKey: process.env.API_TENANT_KEY || process.env.NUXT_PORTAL_API_KEY || 'ce9563cab5f81156b3c1f6ba86ace15c5c1c48f97c4a4a68049d7e84f10a4d23',
+    apiLoginEmail: process.env.API_LOGIN_EMAIL || '',
+    apiLoginPassword: process.env.API_LOGIN_PASSWORD || '',
 
     public: {
       // Client-accessible variables (public)
