@@ -2,17 +2,36 @@ import { getApiToken } from '~/server/utils/apiAuth'
 
 export default defineEventHandler(async (event) => {
   try {
+    const config = useRuntimeConfig(event)
+    const email = config.apiLoginEmail as string
+    const password = config.apiLoginPassword as string
+    
+    // Vérifier si les credentials sont configurés
+    if (!email || !password) {
+      console.error('[API Config] Missing credentials:', {
+        hasEmail: !!email,
+        hasPassword: !!password,
+        emailValue: email || 'not set',
+        passwordValue: password ? '***' : 'not set'
+      })
+      throw createError({
+        statusCode: 401,
+        message: 'API authentication failed - API_LOGIN_EMAIL and API_LOGIN_PASSWORD must be configured'
+      })
+    }
+    
     const token = await getApiToken(event)
     
     if (!token) {
-      console.warn('[API] No JWT token available - API_LOGIN_EMAIL and API_LOGIN_PASSWORD may not be configured')
+      console.error('[API Config] Failed to obtain JWT token after login attempt')
       throw createError({
         statusCode: 401,
-        message: 'API authentication failed'
+        message: 'API authentication failed - could not obtain JWT token'
       })
     }
+    
+    console.log('[API Config] Using JWT token (length:', token.length, ')')
 
-    const config = useRuntimeConfig(event)
     const apiUrl = config.public.portalApiUrl as string
 
     const response = await $fetch(`${apiUrl}/config`, {

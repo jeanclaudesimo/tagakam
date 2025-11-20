@@ -11,6 +11,12 @@ export async function getApiToken(event?: H3Event): Promise<string | null> {
 
   // Si pas de credentials, retourner null
   if (!email || !password) {
+    console.error('[API Auth] Missing credentials:', {
+      hasEmail: !!email,
+      hasPassword: !!password,
+      emailLength: email?.length || 0,
+      passwordLength: password?.length || 0
+    })
     return null
   }
 
@@ -21,6 +27,12 @@ export async function getApiToken(event?: H3Event): Promise<string | null> {
   }
 
   try {
+    console.log('[API Auth] Attempting login with:', {
+      apiUrl: `${apiUrl}/login`,
+      email: email.substring(0, 5) + '***', // Log partiel pour sécurité
+      hasPassword: !!password
+    })
+
     // Faire le login pour obtenir le token
     const response = await $fetch<{ token?: string; code?: number; message?: string }>(
       `${apiUrl}/login`,
@@ -43,17 +55,24 @@ export async function getApiToken(event?: H3Event): Promise<string | null> {
       cachedToken = response.token
       // Supposons que le token expire dans 24h (ajuster selon vos besoins)
       tokenExpiry = now + 24 * 60 * 60 * 1000
-      console.log('[API Auth] Successfully authenticated and cached token')
+      console.log('[API Auth] Successfully authenticated and cached token (length:', response.token.length, ')')
       return cachedToken
     }
 
-    console.error('[API Auth] Login failed:', response.message || 'Unknown error', response)
+    console.error('[API Auth] Login failed - no token in response:', {
+      hasToken: !!response.token,
+      code: response.code,
+      message: response.message,
+      responseKeys: Object.keys(response)
+    })
     return null
   } catch (error: any) {
-    console.error('[API Auth] Login error:', error.message || error, {
+    console.error('[API Auth] Login error:', {
+      message: error.message || error,
       statusCode: error.statusCode,
       statusMessage: error.statusMessage,
-      data: error.data
+      data: error.data,
+      cause: error.cause?.name || error.cause
     })
     return null
   }
