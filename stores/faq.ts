@@ -1,53 +1,34 @@
 import { defineStore } from 'pinia'
 import type { FAQ } from '~/types/api'
+import { faqData } from '~/data/faq'
 
 export const useFaqStore = defineStore('faq', {
   state: () => ({
     faqs: [] as FAQ[],
     loading: false,
-    error: null as string | null,
+    error: null as string | null
   }),
 
   getters: {
     activeFaqs(): FAQ[] {
-      return this.faqs.filter(f => f.active)
-    },
-
-    isLoaded(): boolean {
-      return this.faqs.length > 0
+      return this.faqs.filter(f => f.active).sort((a, b) => a.order - b.order)
     }
   },
 
   actions: {
-    setFaqs(faqs: FAQ[]) {
-      this.faqs = faqs
-      this.error = null
-    },
-
-    setError(error: string | null) {
-      this.error = error
-    },
-
-    setLoading(loading: boolean) {
-      this.loading = loading
-    },
-
     async fetchFaqs() {
-      if (this.isLoaded) {
-        return // Already loaded
-      }
-
-      this.setLoading(true)
-      this.setError(null)
+      this.loading = true
+      this.error = null
 
       try {
-        const data = await $fetch('/api/faq')
-        this.setFaqs((data as any).faqs || [])
+        const api = usePortalAPI()
+        const data = await api.getFaqs()
+        this.faqs = data.faqs || []
       } catch (error: any) {
-        console.error('Error fetching FAQs:', error)
-        this.setError(error.message || 'Failed to fetch FAQs')
+        // Silently fall back to local data
+        this.faqs = faqData
       } finally {
-        this.setLoading(false)
+        this.loading = false
       }
     }
   }

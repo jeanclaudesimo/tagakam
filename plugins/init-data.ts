@@ -4,7 +4,7 @@ export default defineNuxtPlugin(async () => {
   const teamStore = useTeamStore()
   const faqStore = useFaqStore()
 
-  // Load all data - this runs on both server and client
+  // Fetch all data on app initialization
   await Promise.all([
     configStore.fetchConfig(),
     servicesStore.fetchServices(),

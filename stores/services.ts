@@ -1,53 +1,34 @@
 import { defineStore } from 'pinia'
 import type { Service } from '~/types/api'
+import { servicesData } from '~/data/services'
 
 export const useServicesStore = defineStore('services', {
   state: () => ({
     services: [] as Service[],
     loading: false,
-    error: null as string | null,
+    error: null as string | null
   }),
 
   getters: {
     activeServices(): Service[] {
       return this.services.filter(s => s.active)
-    },
-
-    isLoaded(): boolean {
-      return this.services.length > 0
     }
   },
 
   actions: {
-    setServices(services: Service[]) {
-      this.services = services
-      this.error = null
-    },
-
-    setError(error: string | null) {
-      this.error = error
-    },
-
-    setLoading(loading: boolean) {
-      this.loading = loading
-    },
-
     async fetchServices() {
-      if (this.isLoaded) {
-        return // Already loaded
-      }
-
-      this.setLoading(true)
-      this.setError(null)
+      this.loading = true
+      this.error = null
 
       try {
-        const data = await $fetch('/api/services')
-        this.setServices((data as any).services || [])
+        const api = usePortalAPI()
+        const data = await api.getServices()
+        this.services = data.services || []
       } catch (error: any) {
-        console.error('Error fetching services:', error)
-        this.setError(error.message || 'Failed to fetch services')
+        // Silently fall back to local data
+        this.services = servicesData
       } finally {
-        this.setLoading(false)
+        this.loading = false
       }
     }
   }

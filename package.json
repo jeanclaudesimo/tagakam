@@ -11,10 +11,12 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "axios": "^1.13.2",
     "nuxt": "^3.13.0",
     "vue": "latest"
   },
   "devDependencies": {
+    "@iconify-json/mdi": "^1.2.3",
     "@nuxt/icon": "^1.9.3",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@pinia/nuxt": "^0.5.1",
