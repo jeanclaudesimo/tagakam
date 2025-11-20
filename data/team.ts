@@ -1,18 +1,42 @@
 export const teamData = [
-  {
-    id: 1,
-    name: 'Nasser Toma',
-    position: 'CEO & Founder',
-    email: 'info@tagakam.de',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-    active: true
-  },
-  {
-    id: 2,
-    name: 'Team Member',
-    position: 'Specialist',
-    email: 'team@tagakam.de',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
-    active: true
-  }
+   {
+      "id": 6,
+      "name": "Melizie Nganté",
+      "position": "Kundenservice",
+      "email": "m.ngante@tagakam.de",
+      "avatar": null,
+      "social": null,
+      "active": true
+    },
+    {
+      "id": 4,
+      "name": "Claude Simo",
+      "position": "IT",
+      "email": "it@tagakam.de",
+      "avatar": null,
+      "social": null,
+      "active": true
+    },
+    {
+      "id": 3,
+      "name": "Doriane Ngatchie",
+      "position": "Praktikantin",
+      "email": "d.ngatchie@tagakam.de",
+      "avatar": null,
+      "social": null,
+      "active": true
+    },
+    {
+      "id": 2,
+      "name": "Dipl.-Ing Brice Tagakam",
+      "position": "Geschäftsführer",
+      "email": "b.tagakam@tagakam.de",
+      "avatar": "https://minio.digitalssolutions.de:9001/tagakam/team/avatars/6913a0374ccf30.38745342_te__le__chargement.jpeg",
+      "social": {
+        "linkedin": "https://www.maq.net",
+        "twitter": "https://www.runygycipoda.co",
+        "facebook": "https://www.xasi.us"
+      },
+      "active": true
+    }
 ]
