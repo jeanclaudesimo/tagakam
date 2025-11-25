@@ -48,7 +48,7 @@ services:
       - "traefik.http.routers.tagakam.entrypoints=frontendsecure"
       - "traefik.http.routers.tagakam.rule=Host(`www.tagakam.de`)"
       - "traefik.http.routers.tagakam.tls=true"
-      - "traefik.http.routers.kfz.tls.certresolver=leresolver"
+      - "traefik.http.routers.tagakam.tls.certresolver=leresolver"
 
 networks:
   traefik-net:
