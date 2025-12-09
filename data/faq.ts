@@ -2,7 +2,8 @@ export const faqData = [
   {
       "id": 1,
       "question": "Welche Dienstleistungen bietet TaGaKaM&Co an?",
-      "answer": "Wir bieten eine breite Palette von Dienstleistungen, darunter GPS-Installation und Videoüberwachung, Immobilien- und Vermietungsdienste, Reisebuchungen über Easy Fly Global sowie den Verkauf von Afro-Produkten und Autoteilen über unseren 365Shop.",
+      "answer": "TAGAKAM & CO – Ihr Multiservice-Agentur\n" +
+          "Die Firma  bietet vielfältige Dienstleistungen aus einer Hand: Ob Auto-Service, weltweite Transportlösungen, Reiseorganisation, Immobilienservice oder Versicherungen – das Unternehmen steht für zuverlässige und schnelle Unterstützung in allen Bereichen. Alles an einem Ort, bequem und kompetent.",
       "active": true,
       "order": 1
     },
@@ -16,7 +17,22 @@ export const faqData = [
     {
       "id": 3,
       "question": "Bieten Sie auch internationale Versanddienste an?",
-      "answer": "Ja, für unseren 365Shop und die meisten Produkte bieten wir internationalen Versand an. Sie können bequem online bestellen, und wir sorgen dafür, dass Ihre Produkte sicher und schnell zu Ihnen geliefert werden.",
+      "answer": "Als erfahrenes Logistikunternehmen bieten wir umfassende internationale Versanddienstleistungen an. Wir transportieren Ihre Waren sicher und zuverlässig in über 200 Länder – per Luftfracht, Seefracht oder Paketversand.\n" +
+          "Unsere Leistungen umfassen:\n" +
+          "\n" +
+          "✓ Abholung und weltweiten Versand\n" +
+          "\n" +
+          "✓ Express- und Economy-Optionen\n" +
+          "\n" +
+          "✓ Professionelle Verpackung\n" +
+          "\n" +
+          "✓ Zoll- und Exportabwicklung\n" +
+          "\n" +
+          "✓ Digitale Sendungsverfolgung in Echtzeit\n" +
+          "\n" +
+          "✓ Individuelle Lösungen für B2B und B2C\n" +
+          "\n" +
+          "Mit unserem globalen Netzwerk garantieren wir schnelle Laufzeiten, transparente Kosten und höchste Servicequalität.",
       "active": true,
       "order": 3
     },
