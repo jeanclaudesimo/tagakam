@@ -246,7 +246,8 @@ const handleSubmit = async () => {
         email: form.value.email,
         phone: form.value.phone,
         subject: form.value.subject,
-        message: form.value.message
+        message: form.value.message,
+        honeypot: form.value.honeypot // Bot-Schutz
       }
     })
 

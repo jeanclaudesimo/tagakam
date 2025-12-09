@@ -1,0 +1,23 @@
+services:
+  tagakam:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tagakam
+    ports:
+      - "3004:3004"
+    environment:
+      - NODE_ENV=development
+      - PORT=3004
+      - HOST=0.0.0.0
+      - NITRO_PORT=3004
+      - NITRO_HOST=0.0.0.0
+      - NEXT_TELEMETRY_DISABLED=1
+      - NUXT_PUBLIC_API_BASE=http://portal.digitalssolutions.de/api
+      - NUXT_PORTAL_API_URL=http://portal.digitalssolutions.de/api
+      # API Authentication for JWT token (endpoint /config)
+      - API_LOGIN_EMAIL=info@tagakam.de
+      - API_LOGIN_PASSWORD=tagakam
+      # Tenant key for /services, /team, /faq endpoints
+      - API_TENANT_KEY=ce9563cab5f81156b3c1f6ba86ace15c5c1c48f97c4a4a68049d7e84f10a4d23
+    restart: unless-stopped

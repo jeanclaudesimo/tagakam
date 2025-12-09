@@ -6,10 +6,8 @@ export default defineEventHandler(async (event) => {
     const tenantKey = config.apiTenantKey || config.public.portalApiKey || 'ce9563cab5f81156b3c1f6ba86ace15c5c1c48f97c4a4a68049d7e84f10a4d23'
 
     if (!tenantKey) {
-      throw createError({
-        statusCode: 500,
-        message: 'API_TENANT_KEY is not configured'
-      })
+      console.warn('[API] API_TENANT_KEY is not configured - returning empty array')
+      return []
     }
 
     const response = await $fetch(`${apiUrl}/team`, {
@@ -35,7 +33,7 @@ export default defineEventHandler(async (event) => {
                      error.message?.includes('fetch failed')
     
     if (isTimeout) {
-      console.warn('[API] Timeout connecting to team API - using local data')
+      console.warn('[API] Timeout connecting to team API - returning empty array')
     } else {
       console.error('[API] Failed to fetch team:', {
         status,
@@ -44,11 +42,9 @@ export default defineEventHandler(async (event) => {
       })
     }
     
-    // Lancer l'erreur pour que le store puisse utiliser les données locales
-    throw createError({
-      statusCode: status,
-      message
-    })
+    // Retourner un tableau vide au lieu de lancer une erreur pour éviter les rechargements
+    // Le store utilisera les données locales en fallback
+    return []
   }
 })
 

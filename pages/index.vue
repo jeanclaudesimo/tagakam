@@ -3,7 +3,9 @@
     <SectionsHeroSection />
     <SectionsAboutSection />
     <SectionsServicesSection />
-    <SectionsTeamSection />
+    <ClientOnly>
+      <SectionsTeamSection />
+    </ClientOnly>
     <SectionsPartnersSection />
     <SectionsFaqSection />
     <SectionsContactSection />

@@ -23,34 +23,35 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Get API token for authentication
-    const { getApiToken } = await import('~/server/utils/apiAuth')
-    const token = await getApiToken(event)
+    const config = useRuntimeConfig(event)
+    const apiUrl = config.public.portalApiUrl as string
+    const tenantKey = config.apiTenantKey || config.public.portalApiKey
 
-    if (!token) {
+    if (!tenantKey) {
       throw createError({
         statusCode: 500,
-        message: 'API authentication failed - please configure API_LOGIN_EMAIL and API_LOGIN_PASSWORD'
+        message: 'API_TENANT_KEY is not configured'
       })
     }
 
-    const config = useRuntimeConfig(event)
-    const apiUrl = config.public.portalApiUrl as string
-
     // Daten an portal.digitalssolutions.de senden
+    // Le portal attend tenant_key dans le body selon l'exemple curl
     const response = await $fetch(`${apiUrl}/contact/submit`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
       body: {
+        tenant_key: tenantKey,
         name,
         email,
         phone: phone || '',
         subject,
         message
-      }
+      },
+      timeout: 15000, // 15 secondes timeout
+      retry: 1, // Retry une fois en cas d'échec
+      retryDelay: 1000 // Attendre 1 seconde avant le retry
     })
 
     return {
@@ -69,9 +70,20 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    // Log détaillé pour le débogage
+    const status = error.statusCode || error.status || 500
+    const message = error.message || error.data?.message || 'Ein Fehler ist beim Senden Ihrer Nachricht aufgetreten. Bitte versuchen Sie es später erneut.'
+
+    console.error('[Contact API] Error details:', {
+      status,
+      message,
+      details: error.data || error,
+      url: error.url
+    })
+
     throw createError({
-      statusCode: 500,
-      message: 'Ein Fehler ist beim Senden Ihrer Nachricht aufgetreten. Bitte versuchen Sie es später erneut.'
+      statusCode: status,
+      message: message
     })
   }
 })

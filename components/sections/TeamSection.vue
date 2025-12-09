@@ -19,19 +19,47 @@
           <div class="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-white">
             <!-- Avatar -->
             <div class="relative h-64 bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center overflow-hidden">
-              <div class="w-32 h-32 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center">
+              <div v-if="member.avatar" class="w-full h-full">
+                <img 
+                  :src="member.avatar" 
+                  :alt="member.name"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div v-else class="w-32 h-32 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center">
                 <Icon name="mdi:account" class="text-7xl text-white" />
               </div>
               <!-- Social Links Overlay -->
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+              <div 
+                v-if="member.social && (member.social.twitter || member.social.facebook || member.social.linkedin)"
+                class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6"
+              >
                 <div class="flex space-x-3">
-                  <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+                  <a 
+                    v-if="member.social.twitter"
+                    :href="member.social.twitter" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+                  >
                     <Icon name="mdi:twitter" class="text-white text-xl" />
                   </a>
-                  <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+                  <a 
+                    v-if="member.social.facebook"
+                    :href="member.social.facebook" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+                  >
                     <Icon name="mdi:facebook" class="text-white text-xl" />
                   </a>
-                  <a href="#" class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+                  <a 
+                    v-if="member.social.linkedin"
+                    :href="member.social.linkedin" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+                  >
                     <Icon name="mdi:linkedin" class="text-white text-xl" />
                   </a>
                 </div>
