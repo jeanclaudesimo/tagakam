@@ -43,7 +43,7 @@ export default defineNuxtConfig({
     // Server-only variables (private)
     contactFormEnabled: process.env.NUXT_CONTACT_FORM_ENABLED === 'true',
     contactFormToEmail: process.env.NUXT_CONTACT_FORM_TO_EMAIL || 'info@tagakam.de',
-    apiTenantKey: process.env.API_TENANT_KEY || process.env.NUXT_PORTAL_API_KEY || '8d1222ab7ba5da0eb4c83b17da0cbdf9176ccec9ef6127510978f4d734f7fa79',
+    apiTenantKey: process.env.API_TENANT_KEY || process.env.NUXT_PORTAL_API_KEY || '60350fb6cfa9ffe0dd6990c31d380e107d6fe446232f695e77d6274455df5eec',
     apiLoginEmail: process.env.API_LOGIN_EMAIL || '',
     apiLoginPassword: process.env.API_LOGIN_PASSWORD || '',
 
