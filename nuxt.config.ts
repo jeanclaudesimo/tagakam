@@ -55,7 +55,7 @@ export default defineNuxtConfig({
       companyPhone: process.env.NUXT_PUBLIC_COMPANY_PHONE || '+49 123 456789',
 
       // Portal API configuration (public endpoints with tenant_key)
-      portalApiUrl: process.env.NUXT_PORTAL_API_URL || 'http://localhost:8084/api/public',
+      portalApiUrl: process.env.NUXT_PORTAL_API_URL || 'http://portal_nginx/api/public',
       portalApiKey: process.env.NUXT_PORTAL_API_KEY || '60350fb6cfa9ffe0dd6990c31d380e107d6fe446232f695e77d6274455df5eec'
     }
   }
