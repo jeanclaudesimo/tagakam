@@ -8,18 +8,7 @@ services:
       - "3004:3004"   # le conteneur écoute maintenant sur 3004
     environment:
       - NODE_ENV=production
-      - PORT=3004
-      - HOST=0.0.0.0
-      - NITRO_PORT=3004
-      - NITRO_HOST=0.0.0.0
       - NEXT_TELEMETRY_DISABLED=1
-      - NUXT_PUBLIC_API_BASE=http://portal.digitalssolutions.de/api
-      - NUXT_PORTAL_API_URL=http://portal.digitalssolutions.de/api
-      # API Authentication for JWT token (endpoint /config)
-      - API_LOGIN_EMAIL=info@tagakam.de
-      - API_LOGIN_PASSWORD=tagakam
-      # Tenant key for /services, /team, /faq endpoints
-      - API_TENANT_KEY=60350fb6cfa9ffe0dd6990c31d380e107d6fe446232f695e77d6274455df5eec
     restart: unless-stopped
     networks:
       - traefik-net
