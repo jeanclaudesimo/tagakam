@@ -56,7 +56,7 @@ export default defineNuxtConfig({
 
       // Portal API configuration (public endpoints with tenant_key)
       portalApiUrl: process.env.NUXT_PORTAL_API_URL || 'http://localhost:8084/api/public',
-      portalApiKey: process.env.NUXT_PORTAL_API_KEY || '8d1222ab7ba5da0eb4c83b17da0cbdf9176ccec9ef6127510978f4d734f7fa79'
+      portalApiKey: process.env.NUXT_PORTAL_API_KEY || '60350fb6cfa9ffe0dd6990c31d380e107d6fe446232f695e77d6274455df5eec'
     }
   }
 })
