@@ -2,6 +2,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
 
+  devServer: {
+    port: 3004,
+    host: '0.0.0.0'
+  },
+
   nitro: {
     preset: 'node',
     port: 3004,
@@ -38,7 +43,7 @@ export default defineNuxtConfig({
     // Server-only variables (private)
     contactFormEnabled: process.env.NUXT_CONTACT_FORM_ENABLED === 'true',
     contactFormToEmail: process.env.NUXT_CONTACT_FORM_TO_EMAIL || 'info@tagakam.de',
-    apiTenantKey: process.env.API_TENANT_KEY || process.env.NUXT_PORTAL_API_KEY || 'ce9563cab5f81156b3c1f6ba86ace15c5c1c48f97c4a4a68049d7e84f10a4d23',
+    apiTenantKey: process.env.API_TENANT_KEY || process.env.NUXT_PORTAL_API_KEY || '8d1222ab7ba5da0eb4c83b17da0cbdf9176ccec9ef6127510978f4d734f7fa79',
     apiLoginEmail: process.env.API_LOGIN_EMAIL || '',
     apiLoginPassword: process.env.API_LOGIN_PASSWORD || '',
 
@@ -49,9 +54,9 @@ export default defineNuxtConfig({
       companyEmail: process.env.NUXT_PUBLIC_COMPANY_EMAIL || 'info@tagakam.de',
       companyPhone: process.env.NUXT_PUBLIC_COMPANY_PHONE || '+49 123 456789',
 
-      // Portal API configuration
-      portalApiUrl: process.env.NUXT_PORTAL_API_URL || 'http://portal.digitalssolutions.de/api',
-      portalApiKey: process.env.NUXT_PORTAL_API_KEY || 'ce9563cab5f81156b3c1f6ba86ace15c5c1c48f97c4a4a68049d7e84f10a4d23'
+      // Portal API configuration (public endpoints with tenant_key)
+      portalApiUrl: process.env.NUXT_PORTAL_API_URL || 'http://localhost:8084/api/public',
+      portalApiKey: process.env.NUXT_PORTAL_API_KEY || '8d1222ab7ba5da0eb4c83b17da0cbdf9176ccec9ef6127510978f4d734f7fa79'
     }
   }
 })

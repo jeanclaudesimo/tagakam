@@ -1,6 +1,9 @@
-export const servicesData = [
+import type { Service } from '~/types/api'
+
+// Fallback local data - matches API data format
+export const servicesData: Service[] = [
   {
-    id: 1,
+    id: 17,
     title: '365 KFZ-Zulassung',
     description: 'Fahrzeugservice & Zulassungen',
     detailedDescription: 'Professionelle Dienstleistungen rund um Ihr Fahrzeug - von der Zulassung bis zum Service.',
@@ -17,7 +20,7 @@ export const servicesData = [
     ]
   },
   {
-    id: 2,
+    id: 18,
     title: 'NT Global Transit',
     description: 'Transport & Logistiklösungen',
     detailedDescription: 'Umfassende Transport- und Logistiklösungen für nationale und internationale Transporte.',
@@ -35,7 +38,7 @@ export const servicesData = [
     ]
   },
   {
-    id: 3,
+    id: 19,
     title: 'EASYFLY GLOBAL',
     description: 'Flüge & Reiseveranstaltungen',
     detailedDescription: 'Ihr Partner für Flugtickets, Reiseplanung und individuelle Pauschalreisen weltweit.',
@@ -52,7 +55,7 @@ export const servicesData = [
     ]
   },
   {
-    id: 4,
+    id: 20,
     title: 'NT DREAM HOUSE',
     description: 'Alles rund um Immobilien',
     detailedDescription: 'Ihr Spezialist für Immobilienvermittlung, Ferienwohnungen und Monteurunterkünfte.',
@@ -68,7 +71,7 @@ export const servicesData = [
     ]
   },
   {
-    id: 5,
+    id: 21,
     title: 'Ihr Kredit & Versicherungsvermittler',
     description: 'Versicherung, der Sie vertrauen können',
     detailedDescription: 'Umfassende Versicherungslösungen für alle Lebensbereiche - von der Krankenversicherung bis zur Reiseversicherung.',

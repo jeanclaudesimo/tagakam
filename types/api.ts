@@ -107,3 +107,12 @@ export interface ContactFormData {
   subject: string
   message: string
 }
+
+export interface Partner {
+  id: number
+  name: string
+  logo: string
+  website?: string | null
+  description?: string | null
+  sortOrder: number
+}

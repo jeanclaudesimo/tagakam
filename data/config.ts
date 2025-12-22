@@ -14,17 +14,17 @@ export const configData = {
     social_links: null
   },
   smtp: {
-    host: 'mxe932.netcup.net',
-    port: 587,
-    username: 'claude@c-simweb.de',
-    password: 'Da###29031990',
+    host: null,
+    port: null,
+    username: null,
+    password: null,
     encryption: null,
-    from_email: 'claude@c-simweb.de',
-    from_name: 'Claude'
+    from_email: 'info@tagakam.de',
+    from_name: 'tagakam'
   },
   tenant: {
-    id: 2,
+    id: 11,
     name: 'tagakam',
-    domain: 'tagakam.de'
+    domain: 'www.tagakam.de'
   }
 }

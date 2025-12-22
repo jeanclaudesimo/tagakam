@@ -6,13 +6,11 @@ export default defineEventHandler(async (event) => {
     const tenantKey = config.apiTenantKey || config.public.portalApiKey || '8d1222ab7ba5da0eb4c83b17da0cbdf9176ccec9ef6127510978f4d734f7fa79'
 
     if (!tenantKey) {
-      throw createError({
-        statusCode: 500,
-        message: 'API_TENANT_KEY is not configured'
-      })
+      console.warn('[API] API_TENANT_KEY is not configured - returning empty array')
+      return []
     }
 
-    const response = await $fetch(`${apiUrl}/config`, {
+    const response = await $fetch(`${apiUrl}/partners`, {
       params: {
         tenant_key: tenantKey
       },
@@ -27,7 +25,7 @@ export default defineEventHandler(async (event) => {
     return response
   } catch (error: any) {
     const status = error.statusCode || error.status || 500
-    const message = error.message || error.data?.message || 'Failed to fetch config'
+    const message = error.message || error.data?.message || 'Failed to fetch partners'
 
     // Ne pas logger les erreurs de timeout/connection comme des erreurs critiques
     const isTimeout = error.cause?.name === 'ConnectTimeoutError' ||
@@ -35,19 +33,17 @@ export default defineEventHandler(async (event) => {
                      error.message?.includes('fetch failed')
 
     if (isTimeout) {
-      console.warn('[API] Timeout connecting to config API - using local data')
+      console.warn('[API] Timeout connecting to partners API - returning empty array')
     } else {
-      console.error('[API] Failed to fetch config:', {
+      console.error('[API] Failed to fetch partners:', {
         status,
         message,
         details: error.data || error
       })
     }
 
-    // Lancer l'erreur pour que le store puisse utiliser les données locales
-    throw createError({
-      statusCode: status,
-      message
-    })
+    // Retourner un tableau vide au lieu de lancer une erreur pour éviter les rechargements
+    // Le store utilisera les données locales en fallback
+    return []
   }
 })

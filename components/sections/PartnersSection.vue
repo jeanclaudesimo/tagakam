@@ -12,12 +12,25 @@
 
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
         <div
-          v-for="(partner, index) in partners"
-          :key="index"
+          v-for="(partner, index) in sortedPartners"
+          :key="partner.id || index"
           class="group bg-white rounded-xl p-8 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex items-center justify-center"
           :style="`animation-delay: ${index * 0.1}s`"
         >
-          <div class="relative w-full h-24 flex items-center justify-center">
+          <a
+            v-if="partner.website"
+            :href="partner.website"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="relative w-full h-24 flex items-center justify-center"
+          >
+            <img
+              :src="partner.logo"
+              :alt="partner.name"
+              class="max-w-full max-h-full object-contain transition-all duration-300"
+            />
+          </a>
+          <div v-else class="relative w-full h-24 flex items-center justify-center">
             <img
               :src="partner.logo"
               :alt="partner.name"
@@ -31,44 +44,15 @@
 </template>
 
 <script setup lang="ts">
-// Import Partner Logos
-import shop365Logo from '~/assets/images/partner/365Shop.5039ddaf.webp'
-import easyFlyLogo from '~/assets/images/partner/EasyFlyGloballogo.2f7da692.webp'
-import tagakamLogo from '~/assets/images/partner/LogoFaTagakam&Co.3ca181ee.webp'
-import logoRondLogo from '~/assets/images/partner/LogoRond.91bf44ec.webp'
-import dreamHouseLogo from '~/assets/images/partner/NTDreamHouse.123ddd8c.webp'
-import globalTransitLogo from '~/assets/images/partner/NTGlobalTransit.b8d58dfc.webp'
-import locatorLogo from '~/assets/images/partner/NTLocator.bcc93d0d.webp'
+import { usePartnersStore } from '~/stores/partners'
 
-// Partner-Logos
-const partners = [
-  {
-    name: 'NT Global Transit',
-    logo: globalTransitLogo
-  },
-  {
-    name: '365 Shop & Services',
-    logo: shop365Logo
-  },
-  {
-    name: 'Easy Fly Global',
-    logo: easyFlyLogo
-  },
-  {
-    name: 'NT Dream House',
-    logo: dreamHouseLogo
-  },
-  {
-    name: 'NT Locator',
-    logo: locatorLogo
-  },
-  {
-    name: 'TaGaKaM & Co',
-    logo: tagakamLogo
-  },
-  {
-    name: 'Logo Rond',
-    logo: logoRondLogo
-  }
-]
+const partnersStore = usePartnersStore()
+
+// Fetch partners on mount
+onMounted(() => {
+  partnersStore.fetchPartners()
+})
+
+// Get sorted partners from store
+const sortedPartners = computed(() => partnersStore.sortedPartners)
 </script>

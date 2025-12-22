@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig(event)
     const apiUrl = config.public.portalApiUrl as string
     // Use tenant key from config or fallback to default
-    const tenantKey = config.apiTenantKey || config.public.portalApiKey || 'ce9563cab5f81156b3c1f6ba86ace15c5c1c48f97c4a4a68049d7e84f10a4d23'
+    const tenantKey = config.apiTenantKey || config.public.portalApiKey || '8d1222ab7ba5da0eb4c83b17da0cbdf9176ccec9ef6127510978f4d734f7fa79'
 
     if (!tenantKey) {
       console.warn('[API] API_TENANT_KEY is not configured - returning empty array')
