@@ -44,7 +44,7 @@ export default defineNuxtConfig({
     // These can be overridden at runtime via NUXT_* environment variables
     contactFormEnabled: false,
     contactFormToEmail: 'info@tagakam.de',
-    apiTenantKey: 'be67e9ad73d4edb04bf421db2dc5220a8a80c5eb3998dd72c0e3e4aaa1ca8f15',
+    apiTenantKey: '25b74f7a48ced0828436abdae901e07cc88141f9173b1cf3a93265dbb1ef7b2e',
     apiLoginEmail: '',
     apiLoginPassword: '',
 
