@@ -44,7 +44,7 @@ export default defineNuxtConfig({
     // These can be overridden at runtime via NUXT_* environment variables
     contactFormEnabled: false,
     contactFormToEmail: 'info@tagakam.de',
-    apiTenantKey: '60350fb6cfa9ffe0dd6990c31d380e107d6fe446232f695e77d6274455df5eec',
+    apiTenantKey: 'be67e9ad73d4edb04bf421db2dc5220a8a80c5eb3998dd72c0e3e4aaa1ca8f15',
     apiLoginEmail: '',
     apiLoginPassword: '',
 
@@ -58,7 +58,7 @@ export default defineNuxtConfig({
 
       // Portal API configuration (public endpoints with tenant_key)
       portalApiUrl: 'http://portal_nginx/api/public',
-      portalApiKey: '60350fb6cfa9ffe0dd6990c31d380e107d6fe446232f695e77d6274455df5eec'
+      portalApiKey: '8d1222ab7ba5da0eb4c83b17da0cbdf9176ccec9ef6127510978f4d734f7fa79'
     }
   }
 })
