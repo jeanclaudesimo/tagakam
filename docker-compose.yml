@@ -9,6 +9,21 @@ services:
     environment:
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1
+      # Public configuration (accessible client-side)
+      - NUXT_PUBLIC_SITE_URL=${NUXT_PUBLIC_SITE_URL:-https://www.tagakam.de}
+      - NUXT_PUBLIC_COMPANY_NAME=${NUXT_PUBLIC_COMPANY_NAME:-TaGaKaM&Co}
+      - NUXT_PUBLIC_COMPANY_EMAIL=${NUXT_PUBLIC_COMPANY_EMAIL:-info@tagakam.de}
+      - NUXT_PUBLIC_COMPANY_PHONE=${NUXT_PUBLIC_COMPANY_PHONE:-0221 2981 3937}
+      # Portal API configuration
+      - NUXT_PUBLIC_PORTAL_API_URL=${NUXT_PUBLIC_PORTAL_API_URL:-http://portal_nginx/api/public}
+      - NUXT_PUBLIC_PORTAL_API_KEY=${NUXT_PUBLIC_PORTAL_API_KEY:-60350fb6cfa9ffe0dd6990c31d380e107d6fe446232f695e77d6274455df5eec}
+      # Private server-side configuration
+      - NUXT_API_TENANT_KEY=${NUXT_API_TENANT_KEY:-60350fb6cfa9ffe0dd6990c31d380e107d6fe446232f695e77d6274455df5eec}
+      - NUXT_API_LOGIN_EMAIL=${NUXT_API_LOGIN_EMAIL:-}
+      - NUXT_API_LOGIN_PASSWORD=${NUXT_API_LOGIN_PASSWORD:-}
+      # Contact form configuration
+      - NUXT_CONTACT_FORM_ENABLED=${NUXT_CONTACT_FORM_ENABLED:-false}
+      - NUXT_CONTACT_FORM_TO_EMAIL=${NUXT_CONTACT_FORM_TO_EMAIL:-info@tagakam.de}
     restart: unless-stopped
     networks:
       - traefik-net

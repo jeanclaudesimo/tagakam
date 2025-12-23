@@ -41,22 +41,24 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     // Server-only variables (private)
-    contactFormEnabled: process.env.NUXT_CONTACT_FORM_ENABLED === 'true',
-    contactFormToEmail: process.env.NUXT_CONTACT_FORM_TO_EMAIL || 'info@tagakam.de',
-    apiTenantKey: process.env.API_TENANT_KEY || process.env.NUXT_PORTAL_API_KEY || '60350fb6cfa9ffe0dd6990c31d380e107d6fe446232f695e77d6274455df5eec',
-    apiLoginEmail: process.env.API_LOGIN_EMAIL || '',
-    apiLoginPassword: process.env.API_LOGIN_PASSWORD || '',
+    // These can be overridden at runtime via NUXT_* environment variables
+    contactFormEnabled: false,
+    contactFormToEmail: 'info@tagakam.de',
+    apiTenantKey: '60350fb6cfa9ffe0dd6990c31d380e107d6fe446232f695e77d6274455df5eec',
+    apiLoginEmail: '',
+    apiLoginPassword: '',
 
     public: {
       // Client-accessible variables (public)
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-      companyName: process.env.NUXT_PUBLIC_COMPANY_NAME || 'TaGaKaM&Co',
-      companyEmail: process.env.NUXT_PUBLIC_COMPANY_EMAIL || 'info@tagakam.de',
-      companyPhone: process.env.NUXT_PUBLIC_COMPANY_PHONE || '+49 123 456789',
+      // These can be overridden at runtime via NUXT_PUBLIC_* environment variables
+      siteUrl: 'https://www.tagakam.de',
+      companyName: 'TaGaKaM&Co',
+      companyEmail: 'info@tagakam.de',
+      companyPhone: '0221 2981 3937',
 
       // Portal API configuration (public endpoints with tenant_key)
-      portalApiUrl: process.env.NUXT_PORTAL_API_URL || 'http://portal_nginx/api/public',
-      portalApiKey: process.env.NUXT_PORTAL_API_KEY || '60350fb6cfa9ffe0dd6990c31d380e107d6fe446232f695e77d6274455df5eec'
+      portalApiUrl: 'http://portal_nginx/api/public',
+      portalApiKey: '60350fb6cfa9ffe0dd6990c31d380e107d6fe446232f695e77d6274455df5eec'
     }
   }
 })
