@@ -31,28 +31,42 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-net"
     
-      # HTTP (Port 80) → Redirect auf HTTPS
-      - "traefik.http.routers.tagakam-http.entrypoints=frontendsecure"
+      # HTTP (Port 80) www.tagakam.de → Redirect auf HTTPS
+      - "traefik.http.routers.tagakam-http.entrypoints=frontend"
       - "traefik.http.routers.tagakam-http.rule=Host(`www.tagakam.de`)"
       - "traefik.http.routers.tagakam-http.middlewares=tagakam-https"
-      
+      - "traefik.http.routers.tagakam-http.service=tagakam"
+
       - "traefik.http.middlewares.tagakam-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.tagakam-https.redirectscheme.permanent=true"
     
-      # Redirect tagakam.de → www.tagakam.de
+      # HTTP Redirect für tagakam.de → https://www.tagakam.de
+      - "traefik.http.routers.tagakam-root-http.entrypoints=frontend"
+      - "traefik.http.routers.tagakam-root-http.rule=Host(`tagakam.de`)"
+      - "traefik.http.routers.tagakam-root-http.middlewares=tagakam-www-redirect"
+      - "traefik.http.routers.tagakam-root-http.service=tagakam"
+
+      # HTTPS Redirect tagakam.de → www.tagakam.de (nur naked domain, nicht subdomains)
       - "traefik.http.routers.tagakam-root.entrypoints=frontendsecure"
       - "traefik.http.routers.tagakam-root.rule=Host(`tagakam.de`)"
       - "traefik.http.routers.tagakam-root.middlewares=tagakam-www-redirect"
       - "traefik.http.routers.tagakam-root.tls=true"
-    
+      - "traefik.http.routers.tagakam-root.tls.certresolver=leresolver"
+      - "traefik.http.routers.tagakam-root.service=tagakam"
+
       - "traefik.http.middlewares.tagakam-www-redirect.redirectregex.regex=^https?://tagakam\\.de(.*)"
-      - "traefik.http.middlewares.tagakam-www-redirect.redirectregex.replacement=https://www.tagakam.de$1"
+      - "traefik.http.middlewares.tagakam-www-redirect.redirectregex.replacement=https://www.tagakam.de$${1}"
       - "traefik.http.middlewares.tagakam-www-redirect.redirectregex.permanent=true"
+
+      # Service definition
+      - "traefik.http.services.tagakam.loadbalancer.server.port=3004"
     
-      # HTTPS Router
+      # HTTPS Router für www.tagakam.de
       - "traefik.http.routers.tagakam.entrypoints=frontendsecure"
       - "traefik.http.routers.tagakam.rule=Host(`www.tagakam.de`)"
       - "traefik.http.routers.tagakam.tls=true"
       - "traefik.http.routers.tagakam.tls.certresolver=leresolver"
+      - "traefik.http.routers.tagakam.service=tagakam"
 
 networks:
   traefik-net:
